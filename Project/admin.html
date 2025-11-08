@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Sobi Fashion</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <script>
+        // Check if admin is logged in
+        if (!sessionStorage.getItem('adminLoggedIn')) {
+            window.location.href = 'admin-login.html';
+        }
+        
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem('adminLoggedIn');
+            window.location.href = 'admin-login.html';
+        }
+    </script>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.html">Sobi Fashion - Admin</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="cart.html">Cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="sales-report.html">Sales Report</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="admin.html">Admin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" onclick="logout(); return false;">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="admin-section">
+            <h2>Manage Products</h2>
+            
+            <div class="admin-actions">
+                <button class="btn btn-primary" onclick="showAddProductForm()">Add New Product</button>
+            </div>
+
+            <!-- Add/Edit Product Form -->
+            <div id="product-form-container" class="form-container" style="display: none;">
+                <h3 id="form-title">Add Product</h3>
+                <form id="product-form" onsubmit="saveProduct(event)">
+                    <input type="hidden" id="product-id">
+                    
+                    <div class="form-group">
+                        <label for="product-name">Product Name *</label>
+                        <input type="text" id="product-name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product-category">Category *</label>
+                        <select id="product-category" required>
+                            <option value="">Select Category</option>
+                            <option value="Cotton Saree">Cotton Saree</option>
+                            <option value="Poonam Saree">Poonam Saree</option>
+                            <option value="Kanchipuram Saree">Kanchipuram Saree</option>
+                            <option value="Banarasi Saree">Banarasi Saree</option>
+                            <option value="Paithani Saree">Paithani Saree</option>
+                            <option value="Nighty">Nighty</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product-price">Price (₹) *</label>
+                        <input type="number" id="product-price" min="0" step="0.01" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="product-image">Product Image *</label>
+                        <input type="file" id="product-image-file" accept="image/*" onchange="handleImageUpload(event)">
+                        <input type="hidden" id="product-image" required>
+                        <div id="image-preview-container" style="margin-top: 1rem; display: none;">
+                            <img id="image-preview" src="" alt="Preview" style="max-width: 200px; max-height: 200px; border-radius: 5px; border: 2px solid #ddd;">
+                            <button type="button" class="btn btn-danger" onclick="removeImage()" style="margin-top: 0.5rem; padding: 0.5rem 1rem;">Remove Image</button>
+                        </div>
+                        <small style="color: #666; display: block; margin-top: 0.5rem;">Or enter Image URL:</small>
+                        <input type="url" id="product-image-url" placeholder="https://example.com/image.jpg" style="margin-top: 0.5rem;" onchange="handleImageUrl()">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Save Product</button>
+                        <button type="button" class="btn btn-secondary" onclick="cancelForm()">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Products List -->
+            <div class="products-table-container">
+                <h3>All Products</h3>
+                <table id="products-table" class="products-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-tbody">
+                        <!-- Products will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Sobi Fashion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
+

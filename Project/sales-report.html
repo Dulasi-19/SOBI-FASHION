@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Report - Sobi Fashion</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sales.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.html">Sobi Fashion</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="cart.html">Cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="admin-login.html">Admin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="sales-report.html">Sales Report</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="sales-section">
+            <h2>Monthly Sales Report</h2>
+            
+            <div class="report-controls">
+                <div class="control-group">
+                    <label for="month-select">Select Month:</label>
+                    <select id="month-select" onchange="filterSalesByMonth()">
+                        <option value="all">All Months</option>
+                        <option value="0">January</option>
+                        <option value="1">February</option>
+                        <option value="2">March</option>
+                        <option value="3">April</option>
+                        <option value="4">May</option>
+                        <option value="5">June</option>
+                        <option value="6">July</option>
+                        <option value="7">August</option>
+                        <option value="8">September</option>
+                        <option value="9">October</option>
+                        <option value="10">November</option>
+                        <option value="11">December</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="year-select">Select Year:</label>
+                    <select id="year-select" onchange="filterSalesByMonth()">
+                        <!-- Years will be populated dynamically -->
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="price-filter">Price Range:</label>
+                    <select id="price-filter" onchange="filterSalesByMonth()">
+                        <option value="all">All Prices</option>
+                        <option value="0-5000">₹0 - ₹5,000</option>
+                        <option value="5000-10000">₹5,000 - ₹10,000</option>
+                        <option value="10000-20000">₹10,000 - ₹20,000</option>
+                        <option value="20000+">Above ₹20,000</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="sort-by">Sort By:</label>
+                    <select id="sort-by" onchange="filterSalesByMonth()">
+                        <option value="date-desc">Date (Newest)</option>
+                        <option value="date-asc">Date (Oldest)</option>
+                        <option value="price-desc">Price (High to Low)</option>
+                        <option value="price-asc">Price (Low to High)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <button class="btn btn-primary" onclick="exportReport()">Export CSV</button>
+                </div>
+                <div class="control-group">
+                    <button class="btn btn-primary" onclick="printReport()">Print Report</button>
+                </div>
+                <div class="control-group">
+                    <button class="btn btn-primary" onclick="saveReportPDF()">Save as PDF</button>
+                </div>
+            </div>
+
+            <div class="summary-cards">
+                <div class="summary-card">
+                    <h3>Total Sales</h3>
+                    <p class="amount" id="total-sales">₹0</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Total Orders</h3>
+                    <p class="amount" id="total-orders">0</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Average Order Value</h3>
+                    <p class="amount" id="avg-order-value">₹0</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Total Items Sold</h3>
+                    <p class="amount" id="total-items">0</p>
+                </div>
+            </div>
+
+            <div class="sales-table-container">
+                <h3>Sales Details</h3>
+                <table id="sales-table" class="sales-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Bill No</th>
+                            <th>Customer</th>
+                            <th>Address</th>
+                            <th>Items</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                            <th>Total</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sales-tbody">
+                        <!-- Sales will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="empty-sales" class="empty-state" style="display: none;">
+                <p>No sales found for the selected period.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Sobi Fashion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/sales.js"></script>
+</body>
+</html>
+
